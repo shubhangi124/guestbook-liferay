@@ -33,6 +33,7 @@
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
 
 
+
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ page import="com.liferay.portal.kernel.exception.PortalException" %>
 <%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
@@ -56,3 +57,13 @@
 <%@ page import="java.util.HashMap" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+
+
+<%@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.asset.kernel.service.AssetTagLocalServiceUtil" %>
+
+<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetTag" %>
+
+<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
