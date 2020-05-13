@@ -2,7 +2,7 @@ package com.liferay.docs.guestbook.portlet.portlet;
 
 import com.liferay.docs.guestbook.model.Guestbook;
 import com.liferay.docs.guestbook.portlet.constants.GuestbookPortletKeys;
-import com.liferay.docs.guestbook.service.GuestbookLocalService;
+import com.liferay.docs.guestbook.service.GuestbookService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,7 +51,7 @@ public class GuestbookAdminPortlet extends MVCPortlet
 
 	    try 
 	    {
-	        _guestbookLocalService.addGuestbook(serviceContext.getUserId(), name, serviceContext);
+	        _guestbookService.addGuestbook(serviceContext.getUserId(), name, serviceContext);
 	        
 	        SessionMessages.add(request, "guestbookAdded");
 	    }
@@ -72,7 +72,7 @@ public class GuestbookAdminPortlet extends MVCPortlet
 
 	    try 
 	    {
-	        _guestbookLocalService.updateGuestbook(serviceContext.getUserId(), guestbookId, name, serviceContext);
+	        _guestbookService.updateGuestbook(serviceContext.getUserId(), guestbookId, name, serviceContext);
 	        
 	        SessionMessages.add(request, "guestbookUpdated");
 
@@ -93,7 +93,7 @@ public class GuestbookAdminPortlet extends MVCPortlet
 
 	    try 
 	    {
-	        _guestbookLocalService.deleteGuestbook(guestbookId, serviceContext);
+	        _guestbookService.deleteGuestbook(guestbookId, serviceContext);
 	        
 	        SessionMessages.add(request, "guestbookDeleted");
 	    }
@@ -104,12 +104,12 @@ public class GuestbookAdminPortlet extends MVCPortlet
 	    }
 	}
 	
-	private GuestbookLocalService _guestbookLocalService;
+	private GuestbookService _guestbookService;
 
 	@Reference(unbind = "-")
-	protected void setGuestbookService(GuestbookLocalService guestbookLocalService) 
+	protected void setGuestbookService(GuestbookService guestbookService) 
 	{
-	    _guestbookLocalService = guestbookLocalService;
+	    _guestbookService = guestbookService;
 	}
 	
 }

@@ -14,7 +14,16 @@
 
 package com.liferay.docs.guestbook.service.impl;
 
+import com.liferay.docs.guestbook.model.Entry;
 import com.liferay.docs.guestbook.service.base.EntryServiceBaseImpl;
+import com.liferay.docs.guestbook.service.permission.EntryPermission;
+import com.liferay.docs.guestbook.service.permission.GuestbookModelPermission;
+import com.liferay.docs.guestbook.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * The implementation of the entry remote service.
@@ -36,4 +45,41 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.docs.guestbook.service.EntryServiceUtil} to access the entry remote service.
 	 */
+	
+	public Entry addEntry(long userId, long guestbookId, String name, String email, String message, ServiceContext serviceContext) throws PortalException, SystemException 
+	{
+	    GuestbookModelPermission.check(getPermissionChecker(), serviceContext.getScopeGroupId(), ActionKeys.ADD_ENTRY);
+	
+	    return entryLocalService.addEntry(userId, guestbookId, name, email, message, serviceContext);
+	}
+	
+	public Entry deleteEntry(long entryId, ServiceContext serviceContext) throws PortalException, SystemException 
+	{
+	    EntryPermission.check(getPermissionChecker(), entryId, ActionKeys.DELETE);
+	
+	    return entryLocalService.deleteEntry(entryId, serviceContext);
+	}
+	
+	public Entry updateEntry(long userId, long guestbookId, long entryId, String name, String email, String message, ServiceContext serviceContext) throws PortalException, SystemException 
+	{
+	    EntryPermission.check(getPermissionChecker(), entryId, ActionKeys.UPDATE);
+	
+	    return entryLocalService.updateEntry(userId, guestbookId, entryId, name, email, message, serviceContext);
+	}
+
+	public List<Entry> getEntries(long groupId, long guestbookId) throws SystemException 
+	{
+	    return entryPersistence.filterFindByG_G(groupId, guestbookId);
+	}
+	
+	public List<Entry> getEntries(long groupId, long guestbookId, int start, int end) throws SystemException 
+	{
+	    return entryPersistence.filterFindByG_G(groupId, guestbookId, start, end);
+	}
+	
+	public int getEntriesCount(long groupId, long guestbookId) throws SystemException 
+	{
+	    return entryPersistence.filterCountByG_G(groupId, guestbookId);
+	}
+	
 }
